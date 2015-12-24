@@ -13,6 +13,7 @@ defmodule Auctioneer.BidController do
   end
 
   def create(conn, %{"bid" => bid_params}) do
+    IO.puts Auctioneer.AuctionServer.new_bid
     changeset = Bid.changeset(%Bid{}, bid_params)
 
     case Repo.insert(changeset) do
