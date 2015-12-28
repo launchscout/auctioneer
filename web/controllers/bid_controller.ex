@@ -13,12 +13,8 @@ defmodule Auctioneer.BidController do
   end
 
   def create(conn, %{"bid" => bid_params}) do
-    IO.puts Auctioneer.AuctionServer.new_bid
-    changeset = Bid.changeset(%Bid{}, bid_params)
-
-    case Repo.insert(changeset) do
-      {:ok, bid} ->
-        Endpoint.broadcast! "bids:max", "change", Auctioneer.BidView.render("show.json", %{bid: bid})
+    case Auctioneer.AuctionServer.new_bid(bid_params) do
+      bid = %Auctioneer.Bid{} ->
         conn
         |> put_status(:created)
         |> put_resp_header("location", bid_path(conn, :show, bid))

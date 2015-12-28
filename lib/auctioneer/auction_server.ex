@@ -13,12 +13,19 @@ defmodule Auctioneer.AuctionServer do
     {:ok, bids}
   end
 
-  def handle_call({:new_bid, bid = %Bid{amount: amount}}, _from, bids) do
-    {:reply, "wuttup", bids}
+  def handle_call({:new_bid, bid_params}, _from, bids) do
+    changeset = Bid.changeset(%Bid{}, bid_params)
+    case Repo.insert(changeset) do
+      {:ok, bid} ->
+        Auctioneer.Endpoint.broadcast! "bids:max", "change", Auctioneer.BidView.render("show.json", %{bid: bid})
+        {:reply, bid, [bid | bids]}
+      {:error, changeset} ->
+        {:reply, {:error, changeset}, bids}
+    end
   end
 
-  def new_bid do
-    GenServer.call(:auction_server, {:new_bid, %Bid{}})
+  def new_bid(bid_params) do
+    GenServer.call(:auction_server, {:new_bid, bid_params})
   end
 
 end
