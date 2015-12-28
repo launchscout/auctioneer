@@ -29,15 +29,15 @@ defmodule Auctioneer.BidController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    bid = Repo.get!(Bid, id)
-    render(conn, "show.json", bid: bid)
-  end
-
   def max_bid(conn, _) do
     max_amount = Repo.one(from b in Bid, select: max(b.amount))
     max_bid = Repo.one(from b in Bid, where: b.amount == ^max_amount)
     render(conn, "show.json", bid: max_bid)
+  end
+
+  def show(conn, %{"id" => id}) do
+    bid = Repo.get!(Bid, id)
+    render(conn, "show.json", bid: bid)
   end
 
   def update(conn, %{"id" => id, "bid" => bid_params}) do
