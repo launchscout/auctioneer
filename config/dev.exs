@@ -38,3 +38,9 @@ config :auctioneer, Auctioneer.Repo,
   database: "auctioneer_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :auction_server, AuctionServer.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "auctioneer_dev",
+  hostname: "localhost",
+  pool_size: 10

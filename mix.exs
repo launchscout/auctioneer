@@ -18,7 +18,7 @@ defmodule Auctioneer.Mixfile do
   def application do
     [mod: {Auctioneer, []},
      applications: [:ex_machina, :phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :auction_server]]
   end
 
   # Specifies which paths to compile per environment
@@ -37,7 +37,8 @@ defmodule Auctioneer.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.1"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      {:auction_server, path: "../auction_server", env: Mix.env}
     ]
   end
 end

@@ -11,7 +11,6 @@ defmodule Auctioneer do
       supervisor(Auctioneer.Endpoint, []),
       # Start the Ecto repository
       worker(Auctioneer.Repo, []),
-      worker(Auctioneer.AuctionServer, [[name: :auction_server]])
       # Here you could define other workers and supervisors as children
       # worker(Auctioneer.Worker, [arg1, arg2, arg3]),
     ]
