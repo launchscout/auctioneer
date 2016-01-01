@@ -15,7 +15,7 @@ defmodule Auctioneer.Bid do
   end
 
   @required_fields ~w(amount)
-  @optional_fields ~w()
+  @optional_fields ~w(bidder_id auction_item_id)
 
   def highest_bid_amount do
     Repo.one(from bid in Bid, select: max(bid.amount) ) || 0
