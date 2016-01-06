@@ -13,7 +13,7 @@ defmodule Auctioneer.BidController do
   end
 
   def create(conn, %{"bid" => bid_params}) do
-    case Auctioneer.AuctionServer.new_bid(bid_params) do
+    case AuctionServer.BidServer.new_bid(bid_params) do
       {:ok, bid} ->
         conn
         |> put_status(:created)
