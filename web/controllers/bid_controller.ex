@@ -3,7 +3,6 @@ defmodule Auctioneer.BidController do
 
   alias Auctioneer.Endpoint
   alias Auctioneer.Bid
-  import Ecto.Query, only: [from: 2]
 
   plug :scrub_params, "bid" when action in [:create, :update]
 
@@ -27,8 +26,7 @@ defmodule Auctioneer.BidController do
   end
 
   def max_bid(conn, _) do
-    max_amount = Repo.one(from b in Bid, select: max(b.amount))
-    max_bid = Repo.one(from b in Bid, where: b.amount == ^max_amount)
+    {:ok, max_bid} = AuctionServer.BidServer.max_bid
     render(conn, "show.json", bid: max_bid)
   end
 

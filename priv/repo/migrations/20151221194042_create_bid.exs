@@ -4,7 +4,7 @@ defmodule Auctioneer.Repo.Migrations.CreateBid do
   def change do
     create table(:bids) do
       add :amount, :integer
-      add :bidder_id, references(:bidders)
+      add :bidder_id, references(:bidders, on_delete: :delete_all)
       add :auction_item_id, references(:auction_items)
 
       timestamps
